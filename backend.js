@@ -1,6 +1,6 @@
 $(document).ready(function(){
-  $(".score")[0].innerHTML = 0;
-  $(".score")[1].innerHTML = localStorage['highscore'] || 0;
+  $(".score")[0].innerHTML = "Score: 0";
+  $(".score")[1].innerHTML = "Steps: 1";
   $(".mode")[0].innerHTML = "STRICT";
   var rightOrder = [];
   var userOrder = [];
@@ -11,6 +11,9 @@ $(document).ready(function(){
   var animateOrderButton = function(arr) {
     var i = 0;
     var iv = setInterval(function() {
+      $(".btn").off().on("click", function(){
+        alert("Come on! Don't cheat :/");
+      });
       var ob = $("#" + arr[i]);
       ob.addClass("activated");
       $("#sound-" + arr[i])[0].play();
@@ -18,12 +21,43 @@ $(document).ready(function(){
       i++;
       if (i >= arr.length) {
         clearInterval(iv);
+        console.log(rightOrder);
+        $(".btn").off().on("click", function() {
+          $("#sound-" + $(this).attr("id"))[0].play();
+          userOrder.push($(this).attr("id"));
+          for (var i = 0; i < userOrder.length; i++) {
+            if (JSON.stringify(rightOrder) === JSON.stringify(userOrder)) {
+              userOrder = [];
+              nextRound();
+              startGame();
+              break;
+            }
+            if (rightOrder[i] !== userOrder[i]) {
+              if (strict === false && lastChance === true) {
+                lastChance = false;
+                alert("Don't fail again ;)");
+                userOrder = [];
+                animateOrderButton(rightOrder);
+              } else if (lastChance === false) {
+                $("#sound-fail")[0].play();
+                alert("You lost :(");
+                resetGame();
+                break;
+              }
+            }
+          }
+        });
       }
     }, 1000);
   };
   var nextRound = function() {
     score++;
-    $(".score")[0].innerHTML = score;
+    if (score === 20) {
+      alert("Congratulations! You won :)");
+      resetGame();
+    }
+    $(".score")[0].innerHTML = "Score: " + score;
+    $(".score")[1].innerHTML = "Steps: " + (score + 1);
     if(score > localStorage['highscore']){
       $(".score")[1].innerHTML = score;
       localStorage['highscore'] = score;
@@ -31,7 +65,8 @@ $(document).ready(function(){
   };
   var resetGame = function() {
     score = 0;
-    $(".score")[0].innerHTML = 0;
+    $(".score")[0].innerHTML = "Score: 0";
+    $(".score")[1].innerHTML = "Steps: 1";
     rightOrder = [];
     if (strict === false) {
       lastChance = true;
@@ -39,35 +74,11 @@ $(document).ready(function(){
     userOrder = [];
   };
   var startGame = function() {
-    $(".mode").off();
     rightOrder.push(colors[Math.floor(Math.random() * colors.length)]);
     animateOrderButton(rightOrder);
-    $(".btn").off().on("click", function() {
-      $("#sound-" + $(this).attr("id"))[0].play();
-      userOrder.push($(this).attr("id"));
-      for (var i = 0; i < userOrder.length; i++) {
-        if (JSON.stringify(rightOrder) === JSON.stringify(userOrder)) {
-          userOrder = [];
-          nextRound();
-          startGame();
-          break;
-        }
-        if (rightOrder[idx] !== userOrder[idx]) {
-          if (strict === false && lastChance === true) {
-            lastChance = false;
-            alert("Don't fail again ;)");
-            userOrder = [];
-            animateOrderButton(rightOrder);
-          } else if (lastChance === false) {
-            alert("You lost :(");
-            resetGame();
-            break;
-          }
-        }
-      }
-    });
   };
   $(".mode").on("click", function() {
+    resetGame();
     switch (strict) {
       case true:
         strict = false;
@@ -82,6 +93,7 @@ $(document).ready(function(){
     }
   });
   $(".start").on("click", function() {
+    resetGame();
     startGame();
   });
 });
