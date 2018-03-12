@@ -2,16 +2,33 @@
 	<html lang="en">
 		<head>
 			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  			<title>TITLE</title>
+  			<title>Simon Game</title>
   			<link rel="stylesheet" href="./style.css"/>
   			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="./backend.js"></script>
         <link rel="icon" href="https://raw.githubusercontent.com/Chris6077/Portfolio/master/images/logo.png">
+        <audio preload="auto" id="sound-green"> <source src="https://s3.amazonaws.com/freecodecamp/simonSound1.mp3"></source></audio>
+        <audio preload="auto" id="sound-red"><source src="https://s3.amazonaws.com/freecodecamp/simonSound2.mp3"></source></audio>
+        <audio preload="auto" id="sound-yellow"><source src="https://s3.amazonaws.com/freecodecamp/simonSound3.mp3"></source></audio>
+        <audio preload="auto" id="sound-blue"><source src="https://s3.amazonaws.com/freecodecamp/simonSound4.mp3"></source></audio>
 			<style type="text/css">
 			</style>
 		</head>
 		<body>
+        <div class="misc">
+          <h2 class="score">INIT SCORE</h2>
+          <h2 class="score" id="highscore">INIT HIGHSCORE</h2>
+          <button class="buttons mc start">Start</button>
+          <button class="buttons mc mode">INIT Mode</button>
+        </div>
     		<div class="container">
-  			</div>
+          <div class="game">
+            <div class="btn" id="green"></div>
+            <div class="btn" id="red"></div>
+            <div class="btn" id="yellow"></div>
+            <div class="btn" id="blue"></div>
+  			  </div>
+        </div>
   			<div id="footer">
                 <div class="col-md-8">
                     <span>Copyright &copy; 2018 Christian Winkler</span>
