@@ -11,9 +11,10 @@ $(document).ready(function(){
   var animateOrderButton = function(arr) {
     var i = 0;
     var iv = setInterval(function() {
-      $("#" + arr[i]).addClass("activated");
+      var ob = $("#" + arr[i]);
+      ob.addClass("activated");
       $("#sound-" + arr[i])[0].play();
-      setTimeout(function() {$("#" + arr[i]).removeClass("activated");}, 250);
+      setTimeout(function() {ob.removeClass("activated");}, 250);
       i++;
       if (i >= arr.length) {
         clearInterval(iv);
@@ -22,9 +23,9 @@ $(document).ready(function(){
   };
   var nextRound = function() {
     score++;
-    $(".score")[0].innerHTML(score);
+    $(".score")[0].innerHTML = score;
     if(score > localStorage['highscore']){
-      $(".score")[1].innerHTML(score);
+      $(".score")[1].innerHTML = score;
       localStorage['highscore'] = score;
     }
   };
@@ -39,7 +40,7 @@ $(document).ready(function(){
   };
   var startGame = function() {
     $(".mode").off();
-    arr.push(colors[Math.floor(Math.random() * colors.length)]);
+    rightOrder.push(colors[Math.floor(Math.random() * colors.length)]);
     animateOrderButton(rightOrder);
     $(".btn").off().on("click", function() {
       $("#sound-" + $(this).attr("id"))[0].play();
@@ -51,7 +52,7 @@ $(document).ready(function(){
           startGame();
           break;
         }
-        if (JSON.stringify(rightOrder) !== JSON.stringify(userOrder)) {
+        if (rightOrder[idx] !== userOrder[idx]) {
           if (strict === false && lastChance === true) {
             lastChance = false;
             alert("Don't fail again ;)");
