@@ -21,7 +21,6 @@ $(document).ready(function(){
       i++;
       if (i >= arr.length) {
         clearInterval(iv);
-        console.log(rightOrder);
         $(".btn").off().on("click", function() {
         	var x = $(this).attr("id");
             $("#sound-" + x)[0].play();
