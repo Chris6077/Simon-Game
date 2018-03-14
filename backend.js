@@ -41,6 +41,7 @@ $(document).ready(function(){
 	                  animateOrderButton(rightOrder);
 	                } else if (lastChance === false) {
 	                  $("#sound-fail")[0].play();
+	                  $(".btn").off();
 	                  setTimeout(function(){alert("You lost :(");}, 500);
 	                  resetGame();
 	                  break;
