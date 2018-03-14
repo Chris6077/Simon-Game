@@ -23,29 +23,30 @@ $(document).ready(function(){
         clearInterval(iv);
         console.log(rightOrder);
         $(".btn").off().on("click", function() {
-          $("#sound-" + $(this).attr("id"))[0].play();
-          setTimeout(function(){
-            userOrder.push($(this).attr("id"));
-            for (var i = 0; i < userOrder.length; i++) {
-              if (JSON.stringify(rightOrder) === JSON.stringify(userOrder)) {
-                userOrder = [];
-                nextRound();
-                startGame();
-                break;
-              }
-              if (rightOrder[i] !== userOrder[i]) {
-                if (strict === false && lastChance === true) {
-                  lastChance = false;
-                  alert("Don't fail again ;)");
-                  userOrder = [];
-                  animateOrderButton(rightOrder);
-                } else if (lastChance === false) {
-                  $("#sound-fail")[0].play();
-                  setTimeout(function(){alert("You lost :(");}, 500);
-                  resetGame();
-                  break;
-                }
-              }
+        	var x = $(this).attr("id");
+            $("#sound-" + x)[0].play();
+            setTimeout(function(){
+	            userOrder.push(x);
+	            for (var i = 0; i < userOrder.length; i++) {
+	              if (JSON.stringify(rightOrder) === JSON.stringify(userOrder)) {
+	                userOrder = [];
+	                nextRound();
+	                startGame();
+	                break;
+	              }
+	              if (rightOrder[i] !== userOrder[i]) {
+	                if (strict === false && lastChance === true) {
+	                  lastChance = false;
+	                  alert("Don't fail again ;)");
+	                  userOrder = [];
+	                  animateOrderButton(rightOrder);
+	                } else if (lastChance === false) {
+	                  $("#sound-fail")[0].play();
+	                  setTimeout(function(){alert("You lost :(");}, 500);
+	                  resetGame();
+	                  break;
+	                }
+	            }
             }
           }, 500);
         });
