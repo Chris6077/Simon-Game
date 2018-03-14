@@ -16,6 +16,8 @@ $(document).ready(function(){
       });
       var ob = $("#" + arr[i]);
       ob.addClass("activated");
+      $("#sound-" + arr[i])[0].pause();
+      $("#sound-" + arr[i])[0].currentTime = 0;
       $("#sound-" + arr[i])[0].play();
       setTimeout(function() {ob.removeClass("activated");}, 250);
       i++;
@@ -23,6 +25,8 @@ $(document).ready(function(){
         clearInterval(iv);
         $(".btn").off().on("click", function() {
         	var x = $(this).attr("id");
+        	$("#sound-" + x)[0].pause();
+        	$("#sound-" + x)[0].currentTime = 0;
             $("#sound-" + x)[0].play();
             setTimeout(function(){
 	            userOrder.push(x);
@@ -40,11 +44,13 @@ $(document).ready(function(){
 	                  userOrder = [];
 	                  animateOrderButton(rightOrder);
 	                } else if (lastChance === false) {
-	                  $("#sound-fail")[0].play();
-	                  $(".btn").off();
-	                  setTimeout(function(){alert("You lost :(");}, 500);
-	                  resetGame();
-	                  break;
+						$("#sound-fail")[0].pause();
+						$("#sound-fail")[0].currentTime = 0;
+		                $("#sound-fail")[0].play();
+		                $(".btn").off();
+		                setTimeout(function(){alert("You lost :(");}, 500);
+		                resetGame();
+		                break;
 	                }
 	            }
             }
