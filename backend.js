@@ -26,6 +26,7 @@ $(document).ready(function(){
         	var x = $(this).attr("id");
         	$("#sound-" + x)[0].load();
             $("#sound-" + x)[0].play();
+            $(".btn").off();
             setTimeout(function(){
 	            userOrder.push(x);
 	            for (var i = 0; i < userOrder.length; i++) {
@@ -44,7 +45,6 @@ $(document).ready(function(){
 	                } else if (lastChance === false) {
 						$("#sound-fail")[0].load();
 		                $("#sound-fail")[0].play();
-		                $(".btn").off();
 		                setTimeout(function(){alert("You lost :(");}, 500);
 		                resetGame();
 		                break;
