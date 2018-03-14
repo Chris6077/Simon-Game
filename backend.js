@@ -34,7 +34,6 @@ $(document).ready(function(){
 	                $(".btn").off();
 	                setTimeout(function(){alert("You lost :(");}, 500);
 	                resetGame();
-	                break;
 	            }
 	            for (var i = 0; i < userOrder.length; i++) {
 	              if (JSON.stringify(rightOrder) === JSON.stringify(userOrder)) {
